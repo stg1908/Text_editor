@@ -1,5 +1,5 @@
 # text_editor
-Simple text editor made using java
+Simple text editor made using java.
 
 It is text editor just like notepad made by java.
 Edi.java contains the main method. 
