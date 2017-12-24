@@ -3,7 +3,8 @@ import java.util.*;
 import java.util.regex.*;
 import java.awt.*;
 import java.awt.event.*;
-class Edi extends KeyAdapter implements ActionListener 
+
+class Editor extends KeyAdapter implements ActionListener 
 {
 	Frame f; MenuBar mb; Menu m[] = new Menu[2];
 	Frame wrn; Frame fndf; Frame noma;Frame rep;
