@@ -3,10 +3,24 @@ import java.util.*;
 import java.util.regex.*;
 import java.awt.*;
 import java.awt.event.*;
+
+/**
+ * 
+ * @Modified by  SiadaDan
+ * Center the frame to the monitor
+ * Center the "find" frame to the main Frame
+ * Remamed JFrame f to mainFrame. Because its easier to read.
+ * Remamed JFrame fndf to findFrame. Because its easier to read.
+ * Remamed JFrame rep to findAndReplaceFrame. Because its easier to read.
+ * Added some Title text
+ * 
+ * 
+ * 
+ */
 class Edi extends KeyAdapter implements ActionListener 
 {
-	Frame f; MenuBar mb; Menu m[] = new Menu[2];
-	Frame wrn; Frame fndf; Frame noma;Frame rep;
+	Frame mainFrame; MenuBar mb; Menu m[] = new Menu[2];
+	Frame wrn; Frame findFrame; Frame noma;Frame findAndReplaceFrame;
 	TextField retf1,retf2;
 	TextField ftf1;
 	MenuItem nw,opn, sve, ext, svea, fnd,fndr;
@@ -26,8 +40,10 @@ class Edi extends KeyAdapter implements ActionListener
 		noma =new Frame();
 		savem = false;
 		saveasm = false;
-		f=new Frame();
-		f.setSize(800,800);
+		mainFrame=new Frame();
+		mainFrame.setSize(800,800);
+                mainFrame.setLocationRelativeTo(null);
+                mainFrame.setTitle("Simple text editor");
 		mb = new MenuBar();
 		wrn = new Frame();
 		wrn.setSize(400,100);
@@ -47,9 +63,10 @@ class Edi extends KeyAdapter implements ActionListener
 		svea = new MenuItem("Save As...");
 		ext = new MenuItem("Exit");
 		fnd = new MenuItem("Find");
-		fndf=new Frame();
-		fndf.setLayout(new GridLayout(2,2));
-	 	fndf.setSize(400,100);
+		findFrame=new Frame("Find");
+		findFrame.setLayout(new GridLayout(2,2));
+	 	findFrame.setSize(400,100);
+                findFrame.setLocationRelativeTo(mainFrame);
 		Label fl1 = new Label("Find");
 	 	ftf1 = new TextField("            ");
 	 	//ftf1.setSize(50,25);
@@ -59,15 +76,15 @@ class Edi extends KeyAdapter implements ActionListener
 	 	fl1.setFont(ffon);
 	 	fb1.setFont(ffon);
 	 	fb2.setFont(ffon);
-	 	fndf.add(fl1);
+	 	findFrame.add(fl1);
 	 	Panel fp1 = new Panel(new FlowLayout(FlowLayout.LEFT));
 	 	Panel fp2 = new Panel(new FlowLayout(FlowLayout.LEFT));
 	 	Panel fp3 = new Panel(new FlowLayout(FlowLayout.LEFT));
 	 	Panel fp4 = new Panel(new FlowLayout(FlowLayout.LEFT));
 	 	fp1.add(fb1);fp2.add(ftf1);fp3.add(fb2);fp4.add(fl1);
-	 	fndf.add(fp4);
-	 	fndf.add(fp2);fndf.add(fp1);fndf.add(fp3);
-	 	fndf.setResizable(false);		
+	 	findFrame.add(fp4);
+	 	findFrame.add(fp2);findFrame.add(fp1);findFrame.add(fp3);
+	 	findFrame.setResizable(false);		
 		fndr = new MenuItem("Find & Replace");
 		m[0].add(nw); m[0].add(opn); m[0].add(sve);
 		m[0].add(svea); m[0].addSeparator();m[0].add(ext);
@@ -82,7 +99,8 @@ class Edi extends KeyAdapter implements ActionListener
 		fb2.addActionListener(this);
 		fds=new Frame();
 	 	fds.setSize(500,100);
-	 	Label l1=new Label("Save changes to document ‚ÄúUntitled Document 1‚Äù before closing?",Label.CENTER);
+                fds.setLocationRelativeTo(mainFrame);
+	 	Label l1=new Label("Save changes to document ìUntitled Document 1î before closing?",Label.CENTER);
 	 	Label l2= new Label("If you don't save, changes will be permanently lost.",Label.CENTER);
 	 	Panel p1 = new Panel(new FlowLayout(FlowLayout.CENTER));
 	 	Panel p2 = new Panel(new GridLayout(2,1));
@@ -99,8 +117,9 @@ class Edi extends KeyAdapter implements ActionListener
 		nop1.add(nol1);
 		nop2.add(nob1);
 		noma.add(nop1);
-		rep =new Frame();
-		rep.setSize(300,100);
+		findAndReplaceFrame =new Frame("Find & Replace");
+		findAndReplaceFrame.setSize(300,100);
+                findAndReplaceFrame.setLocationRelativeTo(mainFrame);
 		Label repl1 = new Label("Find");
 		retf1 = new TextField("        ");
 		retf2 = new TextField("        ");
@@ -123,8 +142,8 @@ class Edi extends KeyAdapter implements ActionListener
 		
 		repp1.add(repp2);repp1.add(repp3);repp1.add(repp4);
 		repp1.add(repp5);
-		rep.add(repp1);rep.add("South",repp6);
-		rep.setResizable(false);
+		findAndReplaceFrame.add(repp1);findAndReplaceFrame.add("South",repp6);
+		findAndReplaceFrame.setResizable(false);
 		noma.add("South",nop2);
 		noma.setResizable(false);
 	 	b1.addActionListener(this);
@@ -170,12 +189,12 @@ class Edi extends KeyAdapter implements ActionListener
 				 	public void keyReleased(KeyEvent ek){}
 				 		
 				 });
-		f.add(ta);
+		mainFrame.add(ta);
 		p = Pattern.compile("");
 		matchr = p.matcher(ta.getText());
 		Wi w = new Wi();
-		f.addWindowListener(w);
-		f.setMenuBar(mb); f.setVisible(true);
+		mainFrame.addWindowListener(w);
+		mainFrame.setMenuBar(mb); mainFrame.setVisible(true);
 	}
 	public void actionPerformed(ActionEvent e)
 	{
@@ -209,7 +228,7 @@ class Edi extends KeyAdapter implements ActionListener
 		{
 			retf1.setText("");
 			retf2.setText("");
-			rep.setVisible(true);
+			findAndReplaceFrame.setVisible(true);
 		}
 		if(str.equals("Find.")||str.equals("Replace all"))
 		{
@@ -314,7 +333,7 @@ class Edi extends KeyAdapter implements ActionListener
 		
 		if(str.equals("Find"))
 		{
-			fndf.setVisible(true);
+			findFrame.setVisible(true);
 			
 			//fndm = true;
 			ftf1.setText("");
@@ -322,8 +341,8 @@ class Edi extends KeyAdapter implements ActionListener
 		if(str.equals("Close"))
 		{
 			min=0;
-			rep.setVisible(false);
-			fndf.setVisible(false);
+			findAndReplaceFrame.setVisible(false);
+			findFrame.setVisible(false);
 			fb1.setLabel("Find...");
 		}
 		if(str.equals("New"))
@@ -416,8 +435,9 @@ class Edi extends KeyAdapter implements ActionListener
 			if(savem||ta.getText().equals("")||om)
 			{
 				om=false;
-				fd = new FileDialog(f,"Open",FileDialog.LOAD);
-				fd.setVisible(true);
+				fd = new FileDialog(mainFrame,"Open",FileDialog.LOAD);
+                                fd.setVisible(true);
+                                
 				try
 				{
 					if(fd.getFile().equals(null))
@@ -459,7 +479,8 @@ class Edi extends KeyAdapter implements ActionListener
 		{
 			try
 			{
-				fd = new FileDialog(f,"Save As",FileDialog.SAVE);
+				fd = new FileDialog(mainFrame,"Save As",FileDialog.SAVE);
+                                fd.setLocationRelativeTo(mainFrame);
 				fd.setVisible(true);
 			}
 			catch(NullPointerException e12)
